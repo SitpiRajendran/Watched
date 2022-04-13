@@ -7,7 +7,8 @@ const https = require('https');
 const router = express.Router();
 
 const apiURL = 'https://api.themoviedb.org/3/'
-const apiKey = 'ace6858818055395230b20b231944145';
+const apiKey = process.env.API_KEY;
+
 
 router.post('/check', function (req, res) {
     let {
