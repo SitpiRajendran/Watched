@@ -13,10 +13,10 @@ A project for Concordia University's SOEN487, Assignment 3
 - Search for any movie
 - Create and delete movies
 - Follow other users and see what's new with them
-##Connected Users
+## Connected Users
 Clients can make calls as connected users, thye will require to register before utilizing certain functionalities.
 
-##Errors
+## Errors
 Conventional HTTP response codes are used to indicate the success or failure of an API request.
 
 ---
@@ -53,8 +53,8 @@ Conventional HTTP response codes are used to indicate the success or failure of 
   node index.js
 ```
 ---
-#Watched Service API
-##Register
+# Watched Service API
+## Register
 Returns json data about a single user
 
 - URL<br />
@@ -87,7 +87,7 @@ Returns json data about a single user
   
 ---
 
-##Login
+## Login
 Returns json data about a single user
 
 - URL<br />
@@ -125,7 +125,7 @@ Returns json data about a single user
 
 ---
 
-##Check
+## Check
 
 
 - URL<br />
@@ -153,7 +153,7 @@ Returns json data about a single user
 
 ---
 
-##Add
+## Add
 
 
 - URL<br />
@@ -181,7 +181,7 @@ Returns json data about a single user
 
 ---
 
-##Delete
+## Delete
 
 
 - URL<br />
@@ -209,7 +209,7 @@ Returns json data about a single user
 
 ---
 
-##Search
+## Search
 
 
 - URL<br />
@@ -237,7 +237,7 @@ Returns json data about a single user
 
 ---
 
-##Details
+## Details
 
 
 - URL<br />
