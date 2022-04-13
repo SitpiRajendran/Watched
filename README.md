@@ -229,7 +229,27 @@ Returns JSON data about the searched movies.
   <br />
 - Success Response:<br />
     - Code: 200<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"{\
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
       <br />
 - Error Response:<br />
     - Code: 403<br />
@@ -285,7 +305,27 @@ Returns JSON data about the movie.
   <br />
 - Success Response:<br />
     - Code: 200<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"{
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
       <br />
 - Error Response:<br />
     - Code: 403<br />
@@ -313,7 +353,27 @@ Returns JSON data about the popular movies.
   <br />
 - Success Response:<br />
     - Code: 200<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"{
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
       <br />
 - Error Response:<br />
     - Code: 403<br />
@@ -341,7 +401,27 @@ Returns JSON data about the trending movies.
   <br />
 - Success Response:<br />
     - Code: 200<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"{
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
       <br />
 - Error Response:<br />
     - Code: 403<br />
