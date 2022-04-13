@@ -55,7 +55,7 @@ Conventional HTTP response codes are used to indicate the success or failure of 
 ---
 # Watched Service API
 ## Register
-Returns json data about a single user
+Returns success message.
 
 - URL<br />
 /register/:email:password<br />
@@ -88,7 +88,7 @@ Returns json data about a single user
 ---
 
 ## Login
-Returns json data about a single user
+Returns success message.
 
 - URL<br />
   /login/:email:password<br />
@@ -126,7 +126,7 @@ Returns json data about a single user
 ---
 
 ## Check
-
+Returns Boolean depending on if the movie was watched.
 
 - URL<br />
   /login/:accessToken:movieID<br />
@@ -154,7 +154,7 @@ Returns json data about a single user
 ---
 
 ## Add
-
+Returns success message.
 
 - URL<br />
   /login/:accessToken:movieID<br />
@@ -182,7 +182,7 @@ Returns json data about a single user
 ---
 
 ## Delete
-
+Returns success message.
 
 - URL<br />
   /login/:accessToken:movieID<br />
@@ -210,7 +210,7 @@ Returns json data about a single user
 ---
 
 ## Search
-
+Returns JSON data about the searched movies.
 
 - URL<br />
   /login/:accessToken:query<br />
@@ -221,7 +221,7 @@ Returns json data about a single user
 - URL Params
   <br />Required:
   <br />`accessToken=[string]`
-  <br />`movieID=[string]`
+  <br />`query=[string]`
   <br />
   <br />
 - Data Params
@@ -237,8 +237,36 @@ Returns json data about a single user
 
 ---
 
-## Details
+## Follow
+Returns JSON data about the searched movies.
 
+- URL<br />
+  /login/:accessToken:email<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`email=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"Email Added to following"}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"TBD"}`<br />
+
+---
+
+## Details
+Returns JSON data about the movie.
 
 - URL<br />
   /login/:accessToken:query<br />
@@ -249,7 +277,7 @@ Returns json data about a single user
 - URL Params
   <br />Required:
   <br />`accessToken=[string]`
-  <br />`movieID=[string]`
+  <br />`query=[string]`
   <br />
   <br />
 - Data Params
@@ -263,6 +291,62 @@ Returns json data about a single user
     - Code: 403<br />
       Content: `{"TBD"}`<br />
     
+---
+
+## Popular
+Returns JSON data about the popular movies.
+
+- URL<br />
+  /login/:accessToken:query<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`query=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"TBD"}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"TBD"}`<br />
+
+---
+
+## Trending
+Returns JSON data about the trending movies.
+
+- URL<br />
+  /login/:accessToken:query<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`query=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"TBD"}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"TBD"}`<br />
+
 ---
 ## Tech Stack
 
