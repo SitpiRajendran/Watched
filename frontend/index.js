@@ -39,9 +39,9 @@ const httpsOptions = {
     cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
 }
 
-https.createServer(httpsOptions, app).listen(process.env.PORT || 80, function(err) {
+https.createServer(httpsOptions, app).listen(process.env.FRONTEND_PORT || 80, function(err) {
     if (err) console.log("Error in server setup")
-    console.log("Server started SECURE on : https://localhost:" +  (process.env.PORT || 80));
+    console.log("Server started SECURE on : https://localhost:" +  (process.env.FRONTEND_PORT || 80));
 });
 /*     app.listen(process.env.PORT || 80, function(err) {
         if (err) console.log("Error in server setup")

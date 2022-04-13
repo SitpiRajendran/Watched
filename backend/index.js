@@ -10,7 +10,7 @@ const movieRouter = require('./routes/movieRoutes.js')
 
 
 //MONGOOSE
-mongoose.connect("mongodb+srv://soen487-a3:soen487-a3@cluster0.ktrys.mongodb.net/Cluster0?retryWrites=true&w=majority",
+mongoose.connect(process.env.MONGODB_URL,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -45,9 +45,9 @@ app.get('*', function (req, res, next) {
 });
 
 
-app.listen(process.env.PORT || 3001, function (err) {
+app.listen(process.env.BACKEND_PORT || 3001, function (err) {
     if (err) console.log("Error in server setup")
-    console.log("Server started on port: " + (process.env.PORT || 3001));
+    console.log("Server started on port: " + (process.env.BACKEND_PORT || 3001));
 })
 
 module.exports = app;
