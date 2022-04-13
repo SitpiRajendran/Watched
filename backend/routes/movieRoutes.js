@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const User = require('../Models/User');
 const jwt = require('jsonwebtoken');
@@ -6,7 +7,7 @@ const https = require('https');
 const router = express.Router();
 
 const apiURL = 'https://api.themoviedb.org/3/'
-const apiKey = 'APIKEY';
+const apiKey = process.env.API_KEY;
 
 router.post('/add', function (req, res) {
     let {

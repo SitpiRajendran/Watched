@@ -1,4 +1,5 @@
 //SETUP / INITIALIZE
+require('dotenv').config()
 const express = require('express');
 var cors = require('cors');
 
@@ -8,7 +9,7 @@ const bodyParser = require('body-parser');
 const authRouter = require('./routes/authRoutes.js')
 const movieRouter = require('./routes/movieRoutes.js')
 
-
+console.log(process.env.BACKEND_PORT)
 //MONGOOSE
 mongoose.connect(process.env.MONGODB_URL,
     {
