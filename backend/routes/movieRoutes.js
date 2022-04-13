@@ -185,6 +185,59 @@ router.post('/details', function (req, res) {
     });
 })
 
+router.post('/userList', function (req, res) {
+    let {
+        accessToken,
+        query,
+    } = req.query;
+
+    jwt.verify(accessToken, "process.env.ACCESS_TOKEN_SECRET", (err, email) => {
+        if (err) return res.sendStatus(403);
+        req.email = email.email;
+    });
+
+    if (!query) {
+        query = req.email
+    }
+
+    console.log("SEARCHING MOVIES FOR : " + query)
+    User.findOne({ email: query }).then(async function (user) {
+        if (user) {
+            let returningList = []
+            console.log(user.movieList)
+            user.movieList.forEach(element => {
+                https.get(apiURL + "/movie/" + element + "?api_key=" + apiKey, (resp) => {
+                    let data = '';
+
+                    // A chunk of data has been received.
+                    resp.on('data', (chunk) => {
+                        data += chunk;
+                    });
+
+                    // The whole response has been received. Print out the result.
+                    resp.on('end', () => {
+                        let parsedData = JSON.parse(data);
+                        let movie = '{"id": "'+ parsedData.id + '", "title": "'+ parsedData.title +'", "poster_path": "' + parsedData.poster_path + '"}';
+                        returningList.push(movie);
+                    });
+
+                }).on("error", (err) => {
+                    console.log("Error: " + err.message);
+                });
+            });
+            setTimeout(function() {
+                console.log("Sending 200 - List of User movies")
+                console.log(returningList)
+                res.status(200).send(returningList)
+            }, 500);
+
+
+        }
+    })
+
+})
+
+
 router.post('/popular', function (req, res) {
     let {
         accessToken,
