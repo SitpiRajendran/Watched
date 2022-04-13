@@ -427,7 +427,7 @@ Returns JSON data about the trending movies.
     - Code: 403<br />
       Content: `{"403 Forbidden"}`<br />
 
-## Userlist
+## User List
 Returns JSON data about the User movies.
 
 - URL<br />
@@ -475,7 +475,7 @@ Returns JSON data about the User movies.
 ---
 ## Tech Stack
 
-- NodeJS : Backend / Frontend
+- [NodeJS:](https://nodejs.org/en/) : Backend / Frontend
 - [Bulma:](https://bulma.io/) Frontend
 - [IMDB API](https://www.themoviedb.org/): Movie Lookup services
 - [MongoDB:](https://www.mongodb.com/) Database
