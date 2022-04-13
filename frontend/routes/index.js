@@ -65,6 +65,19 @@ router.get('/account', (req, res) => {
     }
 })
 
+router.get('/user', (req, res) => {
+    if (!req.cookies.accessToken)
+        res.render("index", { error: "Vous devez être connecté pour voir cette page" })
+    else {
+        console.log(req.query.user);
+        request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/userList?accessToken=' + req.cookies.accessToken + "&query=" + req.query.user},
+            function (error, response, body) {
+                console.log("Account")
+                res.render('user', { movieList: response.body });
+            })
+    }
+})
+
 
 // LOGIN AND REGISTRATION
 
@@ -77,8 +90,8 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res, next) => {
     const { email, password } = req.body;
-
-    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + 'auth/login?email=' + email + '&password=' + password },
+    console.log(email + "// " + password)
+    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/auth/login?email=' + email + '&password=' + password },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log("Response is 200")
