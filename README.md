@@ -13,10 +13,10 @@ A project for Concordia University's SOEN487, Assignment 3
 - Search for any movie
 - Create and delete movies
 - Follow other users and see what's new with them
-##Connected Users
+## Connected Users
 Clients can make calls as connected users, thye will require to register before utilizing certain functionalities.
 
-##Errors
+## Errors
 Conventional HTTP response codes are used to indicate the success or failure of an API request.
 
 ---
@@ -53,40 +53,386 @@ Conventional HTTP response codes are used to indicate the success or failure of 
   node index.js
 ```
 ---
-#Watched Service API
-##Authentication Endpoints
+# Watched Service API
+## Register
+Returns success message.
 
-###POST /register/:email:password
-Parameters: 
-- email (required)
-- password (required)
+- URL<br />
+/register/:email:password<br />
+  <br />
+- Method:<br />
+`POST`<br />
+<br />
+- URL Params
+  <br />Required:
+<br />`email=[string]`
+<br />`password=[string]`
+<br />
+  <br />
+- Data Params
+    <br />None<br />
+  <br />
+- Success Response:<br />
+  - Code: 200<br />
+  Content: `{"User Created"}`<br />
+    <br />
+- Error Response:<br />
+  - Code: 409<br />
+    Content: `{"User already registered"}`<br />
+    <br />OR<br />
+    <br />
+- Error Response:<br />
+    - Code: 500<br />
+      Content: `{"Error during registration"}`<br />
+  
+---
 
-###POST /login/:email:password
-Parameter: 
-- email (required)
-- password (required)
+## Login
+Returns success message.
+
+- URL<br />
+  /login/:email:password<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`email=[string]`
+  <br />`password=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{Access Token of user}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 400<br />
+      Content: `{"No user found with this email"}`<br />
+      <br />OR<br />
+      <br />
+- Error Response:<br />
+    - Code: 400<br />
+      Content: `{"password incorrect"}`<br />
+      <br />OR<br />
+      <br />
+- Error Response:<br />
+    - Code: 501<br />
+      Content: `{"error during logging"}`<br />
 
 ---
-##Movie Endpoints
 
-###POST /add/:movieID
-Parameter: 
-- movieID (required)
- 
-###POST /delete/:movieID
-Parameter: 
-- movieID (required)
+## Check
+Returns Boolean depending on if the movie was watched.
 
-###POST /search/:query
-Parameter: 
-- TODO
+- URL<br />
+  /login/:accessToken:movieID<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`movieID=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{Boolean}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 400<br />
+      Content: `{"No user found with this email"}`<br />
+
+---
+
+## Add
+Returns success message.
+
+- URL<br />
+  /login/:accessToken:movieID<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`movieID=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"Movie Added"}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 400<br />
+      Content: `{"No user found with this email"}`<br />
+
+---
+
+## Delete
+Returns success message.
+
+- URL<br />
+  /login/:accessToken:movieID<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`movieID=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"Movie Deleted"}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 400<br />
+      Content: `{"No user found with this email"}`<br />
+
+---
+
+## Search
+Returns JSON data about the searched movies.
+
+- URL<br />
+  /login/:accessToken:query<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`query=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"{\
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"TBD"}`<br />
+
+---
+
+## Follow
+Returns JSON data about the searched movies.
+
+- URL<br />
+  /login/:accessToken:email<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`email=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"Email Added to following"}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"TBD"}`<br />
+
+---
+
+## Details
+Returns JSON data about the movie.
+
+- URL<br />
+  /login/:accessToken:query<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`query=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"{
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"TBD"}`<br />
+    
+---
+
+## Popular
+Returns JSON data about the popular movies.
+
+- URL<br />
+  /login/:accessToken:query<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`query=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"{
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"TBD"}`<br />
+
+---
+
+## Trending
+Returns JSON data about the trending movies.
+
+- URL<br />
+  /login/:accessToken:query<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`query=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"{
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"TBD"}`<br />
 
 ---
 ## Tech Stack
 
 - NodeJS : Backend / Frontend
 - [Bulma:](https://bulma.io/) Frontend
-- [IMDB API](): Movie Lookup services
+- [IMDB API](https://www.themoviedb.org/): Movie Lookup services
 - [MongoDB:](https://www.mongodb.com/) Database
 
 ---
