@@ -253,7 +253,7 @@ Returns JSON data about the searched movies.
       <br />
 - Error Response:<br />
     - Code: 403<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"403 Forbidden"}`<br />
 
 ---
 
@@ -281,7 +281,7 @@ Returns JSON data about the searched movies.
       <br />
 - Error Response:<br />
     - Code: 403<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"403 Forbidden"}`<br />
 
 ---
 
@@ -329,7 +329,7 @@ Returns JSON data about the movie.
       <br />
 - Error Response:<br />
     - Code: 403<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"403 Forbidden"}`<br />
     
 ---
 
@@ -377,7 +377,7 @@ Returns JSON data about the popular movies.
       <br />
 - Error Response:<br />
     - Code: 403<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"403 Forbidden"}`<br />
 
 ---
 
@@ -425,8 +425,53 @@ Returns JSON data about the trending movies.
       <br />
 - Error Response:<br />
     - Code: 403<br />
-      Content: `{"TBD"}`<br />
+      Content: `{"403 Forbidden"}`<br />
 
+## Userlist
+Returns JSON data about the User movies.
+
+- URL<br />
+  /userList/:accessToken:query<br />
+  <br />
+- Method:<br />
+  `POST`<br />
+  <br />
+- URL Params
+  <br />Required:
+  <br />`accessToken=[string]`
+  <br />`query=[string]`
+  <br />
+  <br />
+- Data Params
+  <br />None<br />
+  <br />
+- Success Response:<br />
+    - Code: 200<br />
+      Content: `{"{
+      page: x,
+      results: [
+      {
+      id: xxxx,
+      backdrop_path: '/xxxxxxx.jpg',
+      genre_ids: [Array],
+      vote_count: xxxxx,
+      original_language: 'xx',
+      original_title: 'xxxxx',
+      poster_path: '/xxxxx.jpg',
+      title: 'xxxx',
+      video: false,
+      vote_average: 8.2,
+      adult: false,
+      overview: 'xxxx',
+      release_date: '2021-12-15',
+      popularity: 6120.418,
+      media_type: 'movie'
+      },
+      "}`<br />
+      <br />
+- Error Response:<br />
+    - Code: 403<br />
+      Content: `{"403 Forbidden"}`<br />
 ---
 ## Tech Stack
 
