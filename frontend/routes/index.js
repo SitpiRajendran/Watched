@@ -160,6 +160,16 @@ router.get('/following', (req, res) => {
     res.render('following');
 })
 
+router.post('/follow', (req, res) => {
+    const {email} = req.body;
+
+    request.post({url: 'http://localhost:' + process.env.FRONTEND_PORT + '/follow?accessToken=' + req.cookies.accessToken + "&email=" + email},
+        function (error, response, body) {
+            console.log(body)
+            res.redirect('/following')
+        })
+})
+
 // Déconnection
 router.get('/logout', (req, res) => {
     res.clearCookie('accessToken');
