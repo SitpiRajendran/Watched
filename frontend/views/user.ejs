@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Watched - Movie Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/15181efa86.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.3/css/bulma.min.css" />
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+    <section class="container">
+        <div class="columns is-multiline">
+            <div class="column is-8 is-offset-2 register has-text-left">
+                <section class="section pt-3 pl-3 pr-3" style="height: 620px;">
+                    <div class="top-menu">
+                        <h1 class="title is-4 has-text-weight-bold is-primary">Watched</h1>
+                        <div class="left-menu">
+                            <a href="/dashboard" class="subtitle is-6 m-2 is-primary-link">Feed</a>
+                            <a href="/following" class="subtitle is-6 m-2 is-primary-link">My Followings</a>
+                            <form action="/searchMovie" method="post">
+                                <div class="search-box">
+                                    <input type="text" name="query" id="query" placeholder="Search...">
+                                    <button type="submit" style="display: contents;">
+                                        <div class="search-icon">
+                                            <i class="fas fa-search"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </form>
+                            <a href="/account" class="subtitle is-4 m-2 is-primary" style="align-self: center;"><i
+                                class="fas fa-user"></i></a>
+                            <a href="/logout" class="subtitle is-4 m-2 has-text-danger" style="align-self: center;"><i
+                                    class="fas fa-sign-out"></i></a>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3">
+                        <div>
+                            <i
+                                class="fas fa-user"></i>
+                            <%= searchedUser%>
+                        </div>
+                        <% if(typeof movieList !='undefined' ) {%>
+                            <% movieList=JSON.parse(movieList) %>
+                                <h3 class="title has-text-weight-bold is-4 mt-3">This user watched <%=movieList.length%> movies !
+                                </h3>
+                                <% if (movieList.length==0) { %>
+                                    <p>You didn't add any movies 🥲</p>
+                                    <% } %>
+                                        <ul class="columns is-multiline">
+                                            <% for(var i=0; i<movieList.length; i++) {%>
+                                                <% movieList[i]=JSON.parse(movieList[i]) %>
+                                                    <li class="column is-2 mb-3">
+                                                        <a
+                                                            href="https://localhost:80/movieDetails?movieID=<%= movieList[i].id %>">
+                                                            <div class="is-hover">
+                                                                <div
+                                                                    style="height: 200px; background-image: url('https://image.tmdb.org/t/p/w300/<%= movieList[i].poster_path%>'); background-size: cover; background-position: center">
+                                                                </div>
+                                                                <h4 class="is-size-7 mt-2"
+                                                                    style="text-align: -webkit-center; color: black;">
+                                                                    <%= movieList[i].title %>
+                                                                </h4>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+
+                                                    <% } %>
+                                        </ul>
+                                        <% } else {%>
+                                            <p>We wern't able to find any movies 🥲</p>
+                                            <% }%>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</body>
+<style>
+    :root {
+        --brandColor: hsl(258, 67%, 51%);
+        --background: rgb(247, 247, 247);
+        --textDark: hsla(0, 0%, 0%, 0.66);
+        --textLight: hsla(0, 0%, 0%, 0.33);
+    }
+
+    body {
+        background: var(--background);
+        height: 100vh;
+        color: var(--textDark);
+    }
+
+    .field:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    .register {
+        margin-top: 3rem;
+        background: white;
+        border-radius: 10px;
+    }
+
+    .left,
+    .right {
+        padding: 4.5rem;
+    }
+
+    .left {
+        border-right: 5px solid var(--background);
+    }
+
+    .left .title {
+        font-weight: 800;
+        letter-spacing: -2px;
+    }
+
+    .left .colored {
+        color: var(--brandColor);
+        font-weight: 500;
+        margin-top: 1rem !important;
+        letter-spacing: -1px;
+    }
+
+    .left p {
+        color: var(--textLight);
+        font-size: 1.15rem;
+    }
+
+    .right .title {
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    .right .description {
+        margin-top: 1rem;
+        margin-bottom: 1rem !important;
+        color: var(--textLight);
+        font-size: 1.15rem;
+    }
+
+    .right small {
+        color: var(--textLight);
+    }
+
+    input {
+        font-size: 1rem;
+    }
+
+    input:focus {
+        border-color: var(--brandColor) !important;
+        box-shadow: 0 0 0 1px var(--brandColor) !important;
+    }
+
+    .fab,
+    .fas {
+        color: var(--textLight);
+        margin-right: 1rem;
+    }
+</style>
+
+</html>

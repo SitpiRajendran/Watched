@@ -72,8 +72,8 @@ router.get('/user', (req, res) => {
         console.log(req.query.user);
         request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/userList?accessToken=' + req.cookies.accessToken + "&query=" + req.query.user},
             function (error, response, body) {
-                console.log("Account")
-                res.render('user', { movieList: response.body });
+                console.log("User")
+                res.render('user', { movieList: response.body, searchedUser: req.query.user });
             })
     }
 })
