@@ -9,7 +9,6 @@ const router = express.Router();
 const apiURL = 'https://api.themoviedb.org/3/'
 const apiKey = process.env.API_KEY;
 
-
 router.post('/check', function (req, res) {
     let {
         accessToken,
@@ -124,6 +123,34 @@ router.post('/search', function (req, res) {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
+})
+
+router.post('/follow', (req, res) => {
+    let {
+        accessToken,
+        email,
+    } = req.query;
+
+    jwt.verify(accessToken, "process.env.ACCESS_TOKEN_SECRET", (err, email) => {
+        if (err) return res.sendStatus(403);
+        req.email = email.email;
+    });
+
+    User.findOne({ email: req.email }).then(async function (user) {
+        if (user) {
+            user.following.push(email)
+            User.updateOne({ email: req.email }, { following: user.following }, function (err, user) {
+                if (err) {
+                    console.log(err)
+                }
+                else {
+                    console.log("Updated User : ", user);
+                    console.log("Sending 200 - Added Email to following")
+                    res.status(200).send('Email Added to following')
+                }
+            })
+        }
+    })
 })
 
 

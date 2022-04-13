@@ -67,7 +67,7 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res, next) => {
     const { email, password } = req.body;
 
-    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/auth/login?email=' + email + '&password=' + password },
+    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + 'auth/login?email=' + email + '&password=' + password },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log("Response is 200")
@@ -152,7 +152,7 @@ router.post('/searchMovie', (req, res) => {
     const { query } = req.body;
 
     console.log(query)
-    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/search?accessToken=' + req.cookies.accessToken + "&query=" + query },
+    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/search?accessToken=' + req.cookies.accessToken +"&query=" + query},
         function (error, response, body) {
             res.render('search', { movieQueryList: response.body })
         })
@@ -163,7 +163,7 @@ router.post('/searchMovie', (req, res) => {
 router.post('/addMovie', (req, res) => {
     const { movieID } = req.body;
 
-    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/add?accessToken=' + req.cookies.accessToken + "&movieID=" + movieID },
+    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/add?accessToken=' + req.cookies.accessToken +"&movieID=" + movieID},
         function (error, response, body) {
             console.log(body)
             res.redirect('/movieDetails?movieID=' + movieID)
@@ -173,7 +173,7 @@ router.post('/addMovie', (req, res) => {
 router.post('/deleteMovie', (req, res) => {
     const { movieID } = req.body;
 
-    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/delete?accessToken=' + req.cookies.accessToken + "&movieID=" + movieID },
+    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/delete?accessToken=' + req.cookies.accessToken +"&movieID=" + movieID},
         function (error, response, body) {
             console.log(body)
             res.redirect('/movieDetails?movieID=' + movieID)
@@ -182,6 +182,16 @@ router.post('/deleteMovie', (req, res) => {
 
 router.get('/following', (req, res) => {
     res.render('following');
+})
+
+router.post('/follow', (req, res) => {
+    const {email} = req.body;
+
+    request.post({url: 'http://localhost:' + process.env.BACKEND_PORT + '/follow?accessToken=' + req.cookies.accessToken + "&email=" + email},
+        function (error, response, body) {
+            console.log(body)
+            res.redirect('/following')
+        })
 })
 
 // Déconnection
