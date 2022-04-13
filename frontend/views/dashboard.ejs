@@ -36,17 +36,64 @@
                                     class="fas fa-sign-out"></i></a>
                         </div>
                     </div>
+                    <div class="mt-3 p-3">
+                        <h3 class="title has-text-weight-bold is-4">Popular Movies</h3>
+                        <% if(typeof moviePopularList !='undefined' ) {%>
+                            <% moviePopularList=JSON.parse(moviePopularList) %>
+                                <% if (moviePopularList.length==0) { %>
+                                    <p>We wern't able to find any movies 🥲</p>
+                                    <% } %>
+                                        <ul class="columns is-multiline">
+                                            <% for(var i=0; i<6; i++) {%>
+                                                <li class="column is-2 mb-3">
+                                                    <a
+                                                        href="https://localhost:80/movieDetails?movieID=<%= moviePopularList[i].id %>">
+                                                        <div class="is-hover">
+                                                            <div
+                                                                style="height: 200px; background-image: url(https://image.tmdb.org/t/p/w300/<%= moviePopularList[i].poster_path %>); background-size: cover; background-position: center">
+                                                            </div>
+                                                            <h4 class="is-size-7 mt-2" style="text-align: -webkit-center; color: black;">
+                                                                <%= moviePopularList[i].title %>
+                                                            </h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
 
+                                                <% } %>
+                                        </ul>
+                                        <% } else {%>
+                                            <p>We wern't able to find any movies 🥲</p>
+                                            <% }%>
+                    </div>
+                    <div class="mt-3 p-3">
+                        <h3 class="title has-text-weight-bold is-4">Week Trendings</h3>
+                        <% if(typeof movieTrendingList !='undefined' ) {%>
+                            <% movieTrendingList=JSON.parse(movieTrendingList) %>
+                                <% if (movieTrendingList.length==0) { %>
+                                    <p>We wern't able to find any movies 🥲</p>
+                                    <% } %>
+                                        <ul class="columns is-multiline">
+                                            <% for(var i=0; i<12; i++) {%>
+                                                <li class="column is-2 mb-3">
+                                                    <a
+                                                        href="https://localhost:80/movieDetails?movieID=<%= movieTrendingList[i].id %>">
+                                                        <div class="is-hover">
+                                                            <div
+                                                                style="height: 200px; background-image: url(https://image.tmdb.org/t/p/w300/<%= movieTrendingList[i].poster_path %>); background-size: cover; background-position: center">
+                                                            </div>
+                                                            <h4 class="is-size-7 mt-2" style="text-align: -webkit-center; color: black;">
+                                                                <%= movieTrendingList[i].title %>
+                                                            </h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
 
-                    <form action="/addMovie" method="post">
-                        <input type="text" name="movieID" id="movieID" value="1234">
-                        <button type="submit">AddMovie</button>
-                    </form>
-                    <form action="/deleteMovie" method="post">
-                        <input type="text" name="movieID" id="movieID" value="1234">
-                        <button type="submit">Remove Movie</button>
-                    </form>
-
+                                                <% } %>
+                                        </ul>
+                                        <% } else {%>
+                                            <p>We wern't able to find any movies 🥲</p>
+                                            <% }%>
+                    </div>
                 </section>
             </div>
         </div>

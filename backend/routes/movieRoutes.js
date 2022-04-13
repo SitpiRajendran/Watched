@@ -158,4 +158,66 @@ router.post('/details', function (req, res) {
     });
 })
 
+router.post('/popular', function (req, res) {
+    let {
+        accessToken,
+        query,
+    } = req.query;
+
+    jwt.verify(accessToken, "process.env.ACCESS_TOKEN_SECRET", (err, email) => {
+        if (err) return res.sendStatus(403);
+        req.email = email.email;
+    });
+    console.log("DATA : " + query)
+    https.get(apiURL + "discover/movie?api_key=" + apiKey + "&sort_by=popularity.desc", (resp) => {
+        let data = '';
+
+        // A chunk of data has been received.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            console.log(JSON.parse(data));
+            console.log("Sending 200 - List of founded movie")
+            res.status(200).send(JSON.parse(data).results)
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+})
+
+router.post('/trending', function (req, res) {
+    let {
+        accessToken,
+        query,
+    } = req.query;
+
+    jwt.verify(accessToken, "process.env.ACCESS_TOKEN_SECRET", (err, email) => {
+        if (err) return res.sendStatus(403);
+        req.email = email.email;
+    });
+    console.log("DATA : " + query)
+    https.get(apiURL + "trending/movie/week?api_key=" + apiKey, (resp) => {
+        let data = '';
+
+        // A chunk of data has been received.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            console.log(JSON.parse(data));
+            console.log("Sending 200 - List of founded movie")
+            res.status(200).send(JSON.parse(data).results)
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+})
+
 module.exports = router;

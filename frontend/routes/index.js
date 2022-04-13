@@ -16,7 +16,14 @@ router.get('/dashboard', (req, res) => {
     if (!req.cookies.accessToken)
         res.render("index", { error: "Vous devez être connecté pour voir cette page" })
     else {
-        res.render('dashboard');
+        request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/popular?accessToken=' + req.cookies.accessToken },
+            function (error, response, body) {
+                request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/trending?accessToken=' + req.cookies.accessToken },
+                function (err, resp, data) {
+                    console.log(data)
+                    res.render('dashboard', {moviePopularList: body, movieTrendingList: data});
+                })
+            })
     }
 })
 
