@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const { response } = require('express');
-=======
 require('dotenv').config()
->>>>>>> 5999d793c0b0d59dbcfb3085f6eb0a6ed2efcdd3
 const express = require('express');
 const router = express.Router();
 const request = require('request');
@@ -150,7 +146,7 @@ router.post('/searchMovie', (req, res) => {
     const { query } = req.body;
 
     console.log(query)
-    request.post({ url: 'http://localhost:3001/movie/search?accessToken=' + req.cookies.accessToken + "&query=" + query },
+    request.post({ url: 'http://localhost:' + process.env.FRONTEND_PORT + '/movie/search?accessToken=' + req.cookies.accessToken +"&query=" + query},
         function (error, response, body) {
             console.log("Search Movie List: ")
             console.log(response.body)
@@ -163,7 +159,7 @@ router.post('/searchMovie', (req, res) => {
 router.post('/addMovie', (req, res) => {
     const { movieID } = req.body;
 
-    request.post({ url: 'http://localhost:3001/movie/add?accessToken=' + req.cookies.accessToken + "&movieID=" + movieID },
+    request.post({ url: 'http://localhost:' + process.env.FRONTEND_PORT + '/movie/add?accessToken=' + req.cookies.accessToken +"&movieID=" + movieID},
         function (error, response, body) {
             console.log(body)
             res.redirect('/movieDetails?movieID=' + movieID)
@@ -173,7 +169,7 @@ router.post('/addMovie', (req, res) => {
 router.post('/deleteMovie', (req, res) => {
     const { movieID } = req.body;
 
-    request.post({ url: 'http://localhost:3001/movie/delete?accessToken=' + req.cookies.accessToken + "&movieID=" + movieID },
+    request.post({ url: 'http://localhost:' + process.env.FRONTEND_PORT + '/movie/delete?accessToken=' + req.cookies.accessToken +"&movieID=" + movieID},
         function (error, response, body) {
             console.log(body)
             res.redirect('/movieDetails?movieID=' + movieID)
