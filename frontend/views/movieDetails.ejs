@@ -20,7 +20,7 @@
                     <div class="top-menu">
                         <h1 class="title is-4 has-text-weight-bold is-primary">Watched</h1>
                         <div class="left-menu">
-                            <a href="/dashboard" class="subtitle is-6 m-2 is-primary-link is-underlined">Feed</a>
+                            <a href="/dashboard" class="subtitle is-6 m-2 is-primary-link">Feed</a>
                             <a href="/following" class="subtitle is-6 m-2 is-primary-link">My Followings</a>
                             <form action="/searchMovie" method="post">
                                 <div class="search-box">
@@ -37,6 +37,53 @@
                         </div>
                     </div>
 
+                    <div>
+                        <% movieDetails=JSON.parse(movieDetails) %>
+                        <% if (movieDetails.backdrop_path) {%>
+                        <div class="movieDetails-image mt-1" style="background-image:linear-gradient(to bottom, rgba(0, 0, 0, 0),  rgb(255, 255, 255)), url('https://image.tmdb.org/t/p/w500/<%= movieDetails.backdrop_path%>'); color:black; background-size: cover; background-position: center;">
+                            <p class="title has-text-white "><%= movieDetails.title %></p>
+                        </div>
+                        <% } else { %>
+                            <p class="title has-text-black mt-3"><%= movieDetails.title %></p>
+                        <% } %>
+                        <div class="columns mt-5">
+                            <div class="column is-8">
+                                <p><%= movieDetails.overview%></p>
+                            </div>
+                            <div class="column is-4">
+                                <div class="mb-4">
+                                    <% if (watched.includes('false')) { %>
+                                    <form action="/addMovie" method="post">
+                                        <input style="display: none;" type="text" name="movieID" id="movieID" value=<%=movieDetails.id%>>
+                                        <button type="submit" class="button is-primary">I watched this movie</button>
+                                    </form>
+                                    <% } else { %>
+                                        <form action="/deleteMovie" method="post">
+                                            <input style="display: none;" type="text" name="movieID" id="movieID" value=<%=movieDetails.id%>>
+                                            <button type="submit" class="button is-danger">I didn't watched this movie</button>
+                                        </form>
+                                    <% }%>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="has-text-weight-bold">Original Title</p>
+                                    <p><%= movieDetails.original_title%></p>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="has-text-weight-bold">Realease Date</p>
+                                    <p><%= movieDetails.release_date%></p>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="has-text-weight-bold">Rates</p>
+                                    <p><%= movieDetails.vote_average%> / 10</p>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="has-text-weight-bold">Budget</p>
+                                    <p><%= movieDetails.budget%>$</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
