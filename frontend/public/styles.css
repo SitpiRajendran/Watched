@@ -1,0 +1,85 @@
+.button.is-primary {
+  background-color: hsl(258, 67%, 51%);
+}
+
+.button.is-primary.is-hovered,
+.button.is-primary:hover {
+  background-color: hsl(258, 63%, 38%);
+}
+
+.is-primary {
+  color: hsl(258, 67%, 51%);
+}
+
+.is-primary-link {
+  color: black;
+}
+
+.is-primary-link:hover,
+.is-primary-link.is-hovered {
+  color: hsl(258, 63%, 38%);
+}
+
+.top-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.left-menu {
+  display: flex;
+  align-items: baseline;
+  width: 70%;
+  justify-content: space-between;
+}
+
+.search-box {
+  position: relative;
+  height: 40px;
+  border-radius: 50px;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  width: 250px;
+}
+
+.search-box input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 50px;
+  background: rgb(239, 239, 239);
+  outline: none;
+  padding: 0 60px 0 20px;
+  opacity: 1;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.search-box input::placeholder {
+  color: #a6a6a6;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  right: 6%;
+  top: 0%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 60px;
+  font-size: 22px;
+  color: #664aff;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.search-box .search-icon.active {
+  right: 5px;
+  height: 30px;
+  line-height: 40px;
+  width: 50px;
+  font-size: 20px;
+  background: #664aff;
+  color: rgb(239, 239, 239);
+  transform: translateY(-50%) rotate(360deg);
+}
