@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 const request = require('request');
@@ -23,7 +24,27 @@ router.get('/searchMovie', (req, res) => {
     if (!req.cookies.accessToken)
         res.render("index", { error: "Vous devez être connecté pour voir cette page" })
     else {
-        res.render('search');
+        res.redirect('/');
+    }
+})
+
+router.get('/movieDetails', (req, res) => {
+    if (!req.cookies.accessToken)
+        res.render("index", { error: "Vous devez être connecté pour voir cette page" })
+    else {
+        if (!req.query.movieID)
+            res.redirect('/');
+        request.post({ url: 'http://localhost:3001/movie/details?accessToken=' + req.cookies.accessToken + "&query=" + req.query.movieID },
+            function (error, response, body) {
+                console.log("MovieDetails")
+                console.log(response.body)
+                request.post({ url: 'http://localhost:3001/movie/check?accessToken=' + req.cookies.accessToken + "&movieID=" + req.query.movieID },
+                    function (error, checked, body) {
+                        console.log("Watched ?")
+                        console.log(checked.body)
+                        res.render('movieDetails', { movieDetails: response.body, watched: checked.body });
+                    })
+            })
     }
 })
 
@@ -50,7 +71,7 @@ router.post('/login', (req, res, next) => {
                 return;
             } else {
                 console.log("Response is ERROR")
-                res.render('index', {error: "No user found"})
+                res.render('index', { error: "No user found" })
             }
         }
     );
@@ -125,12 +146,12 @@ router.post('/searchMovie', (req, res) => {
     const { query } = req.body;
 
     console.log(query)
-    request.post({ url: 'http://localhost:3001/movie/search?accessToken=' + req.cookies.accessToken +"&query=" + query},
+    request.post({ url: 'http://localhost:3001/movie/search?accessToken=' + req.cookies.accessToken + "&query=" + query },
         function (error, response, body) {
             console.log("Search Movie List: ")
-            console.log(response)
-            res.render('search', {movieQueryList: response.body})
-        })    
+            console.log(response.body)
+            res.render('search', { movieQueryList: response.body })
+        })
 })
 
 // MOVIE EDITING
@@ -138,21 +159,21 @@ router.post('/searchMovie', (req, res) => {
 router.post('/addMovie', (req, res) => {
     const { movieID } = req.body;
 
-    request.post({ url: 'http://localhost:3001/movie/add?accessToken=' + req.cookies.accessToken +"&movieID=" + movieID},
+    request.post({ url: 'http://localhost:3001/movie/add?accessToken=' + req.cookies.accessToken + "&movieID=" + movieID },
         function (error, response, body) {
             console.log(body)
-            res.redirect('/')
-        })    
+            res.redirect('/movieDetails?movieID=' + movieID)
+        })
 })
 
 router.post('/deleteMovie', (req, res) => {
     const { movieID } = req.body;
 
-    request.post({ url: 'http://localhost:3001/movie/delete?accessToken=' + req.cookies.accessToken +"&movieID=" + movieID},
+    request.post({ url: 'http://localhost:3001/movie/delete?accessToken=' + req.cookies.accessToken + "&movieID=" + movieID },
         function (error, response, body) {
             console.log(body)
-            res.redirect('/')
-        })    
+            res.redirect('/movieDetails?movieID=' + movieID)
+        })
 })
 
 router.get('/following', (req, res) => {

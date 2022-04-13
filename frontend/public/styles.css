@@ -83,3 +83,18 @@
   color: rgb(239, 239, 239);
   transform: translateY(-50%) rotate(360deg);
 }
+
+.movieDetails-image {
+  width: 100%;
+  height: 150px;
+  padding: 20px;
+}
+
+.is-hover {
+    background-color: white;
+}
+
+.is-hover:hover{
+    background-color: rgb(246, 226, 255);
+    transition: .5s ease;
+}
