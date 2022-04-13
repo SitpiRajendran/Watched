@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const { response } = require('express');
+=======
+require('dotenv').config()
+>>>>>>> 5999d793c0b0d59dbcfb3085f6eb0a6ed2efcdd3
 const express = require('express');
 const router = express.Router();
 const request = require('request');
@@ -61,7 +65,7 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res, next) => {
     const { email, password } = req.body;
 
-    request.post({ url: 'http://localhost:3001/auth/login?email=' + email + '&password=' + password },
+    request.post({ url: 'http://localhost:' + process.env.FRONTEND_PORT + 'auth/login?email=' + email + '&password=' + password },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log("Response is 200")
@@ -112,7 +116,7 @@ router.post('/register', (req, res) => {
     }
     console.log("Password is long enough")
 
-    request.post({ url: 'http://localhost:3001/auth/register?email=' + email + '&password=' + password },
+    request.post({ url: 'http://localhost:' + process.env.FRONTEND_PORT + '/auth/register?email=' + email + '&password=' + password },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log("Resonse is 200")
