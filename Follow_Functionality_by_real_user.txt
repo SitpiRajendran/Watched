@@ -1,0 +1,15 @@
+title  Follow by the real user
+
+User->Website:Login into or Register and login
+Website->Server:Send user info
+Server->Website:Sign user in or show error
+Website->User:Sign user in or show error
+User->Website:Search a user
+Website->Server:Search a user
+Server->Website:Return User information
+Website->User:Return User profile
+User->Website:Click on follow
+Website->Server:Call follow method
+Server->Server:Update current user followings
+Server->Website:Return follow succcess message
+Website->User:Return follow success message

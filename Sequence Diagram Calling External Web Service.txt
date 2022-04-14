@@ -1,0 +1,8 @@
+title Calling External Web service
+
+App Back-end->App Back-end:Retrieve API key
+App Back-end->App Back-end:Retrieve Query String
+App Back-end->IMDB API:HTTPS GET, with API key and Query String
+App Back-end<--IMDB API:Send chunks of data
+App Back-end->App Back-end:Parse chunks of data
+App Back-end->App Back-end:Send parsed data back to Front-end

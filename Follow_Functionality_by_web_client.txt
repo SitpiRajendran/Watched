@@ -1,0 +1,17 @@
+title  Follow by the web client
+
+User->Website:Login into or Register and login
+Website->Server:Call Login or Register method with details necessary (email, password)
+Server->Server:Log user and retrieve access token or register user
+Server->Website:Returned validated redirect to home page if login successful OR Returned successful registration and redirect to login page
+Website->User:Sign user in and redirect to homepage OR Redirect user to homepage
+User->Website:Search a user
+Website->Server:Call the user method to search for a user with current user accessToken to validte method invocation
+Server->Server:Search DB for existing user
+Server->Website:Return User name in String, if successful user search
+Website->User:Render User name with Follow button
+User->Website:Click on follow
+Website->Server:Call follow method to follow user with current user accessToken
+Server->Server:Update DB current user followings
+Server->Website:Return follow succcess
+Website->User:Render Unfollow button if successful
