@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 
-// MAIN
+// MAIN PAGES
 
 router.get('/', (req, res) => {
     if (req.cookies.accessToken)
@@ -57,7 +57,7 @@ router.get('/account', (req, res) => {
     if (!req.cookies.accessToken)
         res.render("index", { error: "Vous devez être connecté pour voir cette page" })
     else {
-        request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/userList?accessToken=' + req.cookies.accessToken},
+        request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/userList?accessToken=' + req.cookies.accessToken },
             function (error, response, body) {
                 console.log("Account")
                 res.render('account', { movieList: response.body });
@@ -69,11 +69,38 @@ router.get('/user', (req, res) => {
     if (!req.cookies.accessToken)
         res.render("index", { error: "Vous devez être connecté pour voir cette page" })
     else {
-        console.log(req.query.user);
-        request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/userList?accessToken=' + req.cookies.accessToken + "&query=" + req.query.user},
+        console.log("USER QUERY : " + req.query.user);
+        request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/userList?accessToken=' + req.cookies.accessToken + "&query=" + req.query.user },
             function (error, response, body) {
-                console.log("User")
-                res.render('user', { movieList: response.body, searchedUser: req.query.user });
+                request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/follow/check?accessToken=' + req.cookies.accessToken + "&email=" + req.query.user },
+                    function (err, resp, data) {
+                        console.log("User" + data)
+                        res.render('user', { movieList: response.body, searchedUser: req.query.user, isFollowing: data });
+                    })
+            })
+    }
+})
+
+
+
+router.get('/following', (req, res) => {
+    if (!req.cookies.accessToken)
+        res.render("index", { error: "Vous devez être connecté pour voir cette page" })
+    else {
+        let followList = [];
+        request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/follow/list?accessToken=' + req.cookies.accessToken },
+            function (error, response, body) {
+                response.body = response.body.slice(1, response.body.length-1).split(",")
+                response.body.forEach(element => {
+                    element = element.slice(1, element.length-1)
+                    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/movie/userList?accessToken=' + req.cookies.accessToken + "&query=" + element},
+                        function (err, resp, data) {
+                            followList.push('{"user": "' + element + '", "movielist":' + data + '}')
+                        })
+                });
+                setTimeout(function() {
+                    res.render('following', { list: followList });
+                }, 1000);
             })
     }
 })
@@ -170,7 +197,7 @@ router.post('/register', (req, res) => {
     );
 })
 
-// MOVIE SEARCH
+// SEARCH FUNCTIONS
 
 router.post('/searchMovie', (req, res) => {
     const { query } = req.body;
@@ -182,7 +209,7 @@ router.post('/searchMovie', (req, res) => {
         })
 })
 
-// MOVIE EDITING
+// MOVIE FUNCTION
 
 router.post('/addMovie', (req, res) => {
     const { movieID } = req.body;
@@ -204,17 +231,39 @@ router.post('/deleteMovie', (req, res) => {
         })
 })
 
-router.get('/following', (req, res) => {
-    res.render('following');
-})
+
+// USER FOLLOW FUNCTIONS
 
 router.post('/follow', (req, res) => {
     const { email } = req.body;
 
-    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/follow?accessToken=' + req.cookies.accessToken + "&email=" + email },
+    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/follow/follow?accessToken=' + req.cookies.accessToken + "&email=" + email },
         function (error, response, body) {
             console.log(body)
-            res.redirect('/following')
+            res.redirect('/user?user=' + email)
+        })
+})
+
+router.post('/unfollow', (req, res) => {
+    const { email } = req.body;
+
+    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/follow/unfollow?accessToken=' + req.cookies.accessToken + "&email=" + email },
+        function (error, response, body) {
+            console.log(body)
+            res.redirect('/user?user=' + email)
+        })
+})
+
+router.post('/searchuser', (req, res) => {
+    const { email } = req.body;
+
+    console.log("Searching User / " + email)
+    request.post({ url: 'http://localhost:' + process.env.BACKEND_PORT + '/follow/search?accessToken=' + req.cookies.accessToken + "&email=" + email },
+        function (error, response, body) {
+            if (response.statusCode == 200) {
+                res.redirect('/user?user=' + email)
+            } else
+                res.redirect('/following')
         })
 })
 

@@ -20,8 +20,8 @@
                     <div class="top-menu">
                         <h1 class="title is-4 has-text-weight-bold is-primary">Watched</h1>
                         <div class="left-menu">
-                            <a href="/dashboard" class="subtitle is-6 m-2 is-primary-link is-underlined">Feed</a>
-                            <a href="/following" class="subtitle is-6 m-2 is-primary-link">My Followings</a>
+                            <a href="/dashboard" class="subtitle is-6 m-2 is-primary-link">Feed</a>
+                            <a href="/following" class="subtitle is-6 m-2 is-primary-link is-underlined">My Followings</a>
                             <form action="/searchMovie" method="post">
                                 <div class="search-box">
                                     <input type="text" name="query" id="query" placeholder="Search...">
@@ -33,12 +33,59 @@
                                 </div>
                             </form>
                             <a href="/account" class="subtitle is-4 m-2 is-primary" style="align-self: center;"><i
-                                class="fas fa-user"></i></a>
+                                    class="fas fa-user"></i></a>
                             <a href="/logout" class="subtitle is-4 m-2 has-text-danger" style="align-self: center;"><i
                                     class="fas fa-sign-out"></i></a>
                         </div>
                     </div>
-
+<div class="columns mt-2">
+    <div class="column is-8">
+        <% for(var i=0; i<list.length; i++) { %>
+            <div>
+                <% list[i]=JSON.parse(list[i])%>
+                <% list[i].movielist=JSON.parse("[" + list[i].movielist + "]" ) %>
+                <p><i class="fas fa-user mx-3"></i><a class="is-size-5 has-text-weight-bold is-primary" href="/user?user=<%= list[i].user%>"><%= list[i].user%></a> - <%= list[i].movielist.length %> movies watched</p>
+                                <div>
+                                    <% if(typeof list[i].movielist !=' undefined' ) {%>
+                                        <ul class="columns is-multiline p-3">
+                                            <% for(var j=0; j<list[i].movielist.length; j++) { %>
+                                                <li class="column is-3">
+                                                    <a
+                                                        href="https://localhost:80/movieDetails?movieID=<%= list[i].movielist[j].id %>">
+                                                        <div class="is-hover">
+                                                            <div
+                                                                style="height: 200px; background-image: url('https://image.tmdb.org/t/p/w300/<%= list[i].movielist[j].poster_path%>'); background-size: cover; background-position: center">
+                                                            </div>
+                                                            <h4 class="is-size-7 mt-2"
+                                                                style="text-align: -webkit-center; color: black;">
+                                                                <%= list[i].movielist[j].title %>
+                                                            </h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <% }%>
+                                        </ul>
+                                        <% } else {%>
+                                            <p>We wern't able to find any movies 🥲</p>
+                                            <% }%>
+                                </div>
+            </div>
+            <% } %>
+    </div>
+    <div class="column is-4">
+        Find a user
+        <form action="/searchuser" method="post" class="mt-2">
+            <div class="search-box">
+                <input type="text" name="email" id="email" placeholder="mail@watched.com">
+                <button type="submit" style="display: contents;">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
                 </section>
             </div>
         </div>

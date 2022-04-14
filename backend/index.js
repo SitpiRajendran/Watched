@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const authRouter = require('./routes/authRoutes.js')
 const movieRouter = require('./routes/movieRoutes.js')
+const followRouter = require('./routes/followRoutes.js')
 
 console.log(process.env.BACKEND_PORT)
 //MONGOOSE
@@ -35,6 +36,7 @@ app.get('/', function (req, res, next) {
 
 app.use('/auth', authRouter);
 app.use('/movie', movieRouter);
+app.use('/follow', followRouter);
 
 app.get('*', function (req, res, next) {
     res.status(404);

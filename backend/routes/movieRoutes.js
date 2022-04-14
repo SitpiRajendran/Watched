@@ -115,7 +115,6 @@ router.post('/search', function (req, res) {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            console.log(JSON.parse(data));
             console.log("Sending 200 - List of founded movie")
             res.status(200).send(JSON.parse(data).results)
         });
@@ -124,35 +123,6 @@ router.post('/search', function (req, res) {
         console.log("Error: " + err.message);
     });
 })
-
-router.post('/follow', (req, res) => {
-    let {
-        accessToken,
-        email,
-    } = req.query;
-
-    jwt.verify(accessToken, "process.env.ACCESS_TOKEN_SECRET", (err, email) => {
-        if (err) return res.sendStatus(403);
-        req.email = email.email;
-    });
-
-    User.findOne({ email: req.email }).then(async function (user) {
-        if (user) {
-            user.following.push(email)
-            User.updateOne({ email: req.email }, { following: user.following }, function (err, user) {
-                if (err) {
-                    console.log(err)
-                }
-                else {
-                    console.log("Updated User : ", user);
-                    console.log("Sending 200 - Added Email to following")
-                    res.status(200).send('Email Added to following')
-                }
-            })
-        }
-    })
-})
-
 
 router.post('/details', function (req, res) {
     let {
@@ -175,7 +145,6 @@ router.post('/details', function (req, res) {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            console.log(JSON.parse(data));
             console.log("Sending 200 - Details of the movie")
             res.status(200).send(JSON.parse(data))
         });
@@ -204,7 +173,6 @@ router.post('/userList', function (req, res) {
     User.findOne({ email: query }).then(async function (user) {
         if (user) {
             let returningList = []
-            console.log(user.movieList)
             user.movieList.forEach(element => {
                 https.get(apiURL + "/movie/" + element + "?api_key=" + apiKey, (resp) => {
                     let data = '';
@@ -227,7 +195,6 @@ router.post('/userList', function (req, res) {
             });
             setTimeout(function() {
                 console.log("Sending 200 - List of User movies")
-                console.log(returningList)
                 res.status(200).send(returningList)
             }, 500);
 
